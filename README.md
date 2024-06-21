@@ -16,7 +16,7 @@
 - Networking and infrastructure projects that require robust, scalable, and secure implementations.
 
 ## 📫 How to reach me ...
-- Email: [worbdperfect@gmail.com](mailto:your-email@example.com)
+- Email: aif.it.hotmail.com
 - Telegram: [Telegram Username](https://t.me/yourusername)
 
 ## 😄 Pronouns: ...
