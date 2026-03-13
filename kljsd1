@@ -1,0 +1,123 @@
+Log_2001-db8-85a3--8a2e-0370-7334_20260307_071455_JFR.ici
+
+Juju ID: 43565742305011987LA
+"integrity": data_hash
+
+Perfect — we can extend your v2 workflow to:
+
+1. Use a **YAML file** containing medication names as **main.net pipelines**.
+2. Push the repo to a **remote node** and create a PR automatically.
+
+Here’s a **ready-to-run setup** for your v2 environment:
+
+---
+
+### 1️⃣ Create `pipelines.yaml` with medication names
+
+```bash id="hywn9f"
+cd ~/sandos/lauren_dao_v2
+nano pipelines.yaml
+```
+
+Example content:
+
+```yaml id="dqlm0p"
+pipelines:
+  - aspirin
+  - ibuprofen
+  - acetaminophen
+  - metformin
+  - amoxicillin
+  - atorvastatin
+  - omeprazole
+  - insulin
+```
+
+Save and exit. This YAML will act as your **main.net pipeline reference**.
+
+---
+
+### 2️⃣ Extend `extend00a.py` to read pipelines
+
+Add this at the top after imports:
+
+```python id="qk2l1m"
+import yaml
+
+def load_pipelines(file_path="pipelines.yaml"):
+    try:
+        with open(file_path) as f:
+            data = yaml.safe_load(f)
+            pipelines = data.get("pipelines", [])
+            print("Loaded pipelines:", pipelines)
+            return pipelines
+    except Exception as e:
+        print("Error loading pipelines.yaml:", e)
+        return []
+
+# Example usage
+pipelines = load_pipelines()
+```
+
+Install PyYAML in your venv:
+
+```bash id="zzl0v1"
+pip install pyyaml
+```
+
+---
+
+### 3️⃣ Script to push to remote and open a PR
+
+Save this as `push_pr_v2.sh`:
+
+```bash id="t0y2ix"
+#!/bin/bash
+# push_pr_v2.sh
+# Push v2 branch to remote and prepare PR
+
+cd ~/sandos/lauren_dao_v2 || exit 1
+
+# 1. Add remote (replace with your repo URL)
+git remote add origin https://github.com/username/lauren_dao_v2.git 2>/dev/null
+
+# 2. Checkout test branch
+git checkout -b v2-testnet
+
+# 3. Add all files and commit
+git add .
+git commit -m "[PR-001] Add pipelines.yaml and extend00a v2"
+
+# 4. Push to remote
+git push -u origin v2-testnet
+
+echo "Branch v2-testnet pushed to remote"
+echo "Now create a PR on GitHub/GitLab from v2-testnet to main"
+```
+
+Make executable:
+
+```bash id="kljsd1"
+chmod +x push_pr_v2.sh
+```
+
+Run it:
+
+```bash id="qlr0wm"
+./push_pr_v2.sh
+```
+
+---
+
+### ✅ Outcome
+
+* `pipelines.yaml` acts as **main.net pipeline definitions**
+* Local `v2-testnet` branch pushed to remote
+* Pull request can now be opened via GitHub/GitLab UI (or API)
+* `extend00a.py` loads pipelines dynamically and can incorporate them into proposals or workflow logic
+
+---
+
+I can also **enhance `extend00a.py`** so each medication in `pipelines.yaml` automatically creates a **v2 proposal**, so your PR is **fully testnet-ready** with pipeline proposals.
+
+Do you want me to do that next?
